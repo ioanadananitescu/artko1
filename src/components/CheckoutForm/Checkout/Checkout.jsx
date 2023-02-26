@@ -9,7 +9,7 @@ const steps=['Adresa livrare', 'Detalii de plata','Confirmare', 'Plata'];
 
 const Checkout = () => {
    
-  const [activeStep, setActiveStep]=useState(3);
+  const [activeStep, setActiveStep]=useState(2);
   const classes=useStyles(); 
   
   const Confirmation=()=>(
