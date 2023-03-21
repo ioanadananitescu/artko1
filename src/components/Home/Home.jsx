@@ -1,15 +1,15 @@
-import React, {useState, useEffect, Suspense, lazy} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Grid, Typography, CardMedia, Box} from '@material-ui/core';
 import {Link} from 'react-router-dom';
 import useStyles from './styles';
 
-import {Featured, Navbar} from '../../components';
+import {Featured, Navbar, Products} from '../../components';
 
 
 
 const Home = ({products, onAddToCart}) => {
 
-    const Productslazy = lazy (()=> import ('../Products/Products'));
+    
     const classes= useStyles();
 
 
@@ -24,14 +24,16 @@ height of the toolbar so the products are pushed a little bit down */}
 
 <div className={classes.toolbar} />
 
-<Box>
+<div style={{margin:'auto'}}>
+  <div style={{position:'relative'}}>
 <Featured products={products}/> 
-</Box>
-<Box sx={{position:'absolute', top:600}}>
-<Suspense fallback={<p>Loading</p>}>
-<Productslazy products={products}/>
-</Suspense>
-</Box>
+</div>
+<div style={{position:'absolute', top:600}}>
+
+
+<Products products={products}/>
+
+</div></div>
       </main>
     </>
   )

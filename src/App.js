@@ -69,7 +69,7 @@ const App = () => {
        
          
     },[])
-
+console.log(products);
   return (
     <Router>
     <div className="App">

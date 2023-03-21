@@ -31,6 +31,7 @@ const Products = ({products, featured, onAddToCart}) => {
     height of the toolbar so the products are pushed a little bit down */}
 
       <div className={classes.toolbar} />
+      <div className={classes.toolbar} />
 
 
 

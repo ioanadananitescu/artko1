@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 
 import Carousel from 'react-material-ui-carousel';
-import Loading from '../Loading/Loading';
+
  import {  Typography, Button} from '@material-ui/core';
 import {Card, CardMedia, CardContent} from '@mui/material';
 import useStyles from './styles';
@@ -15,13 +15,11 @@ const Featured = ({products}) => {
   const classes=useStyles();
 
 
-  const featured= products.filter(item => item.price.formatted_with_symbol>'lei480.00');
+  const featured= products.filter((item) => item.price.formatted_with_symbol ==='lei2,000.00');
 
 
 
-
-
-  const [loading, setLoading]=useState(true);
+const [loading, setLoading]=useState(true);
 
   useEffect(()=>{
     const timer = setTimeout(()=>{
@@ -29,9 +27,9 @@ const Featured = ({products}) => {
     }, 2000);
     return ()=> clearTimeout(timer);
 
-  },[]);
+  },[]); 
 
-
+console.log(featured);
   return (
     <>
     <main className={classes.content}>
@@ -40,8 +38,9 @@ const Featured = ({products}) => {
     height of the toolbar so the products are pushed a little bit down */}
 
       <div className={classes.toolbar} />
+      <div className={classes.toolbar}/>
 
- <Box sx={{width:'100%', height:'auto', overflowY:'none', display:'block'}}>
+{/*  <Box sx={{width:'100%', height:'auto', overflowY:'none', display:'block'}}>
 
   <ImageList cols={3} gap={1}>
 {featured.map((item)=>(
@@ -71,25 +70,24 @@ const Featured = ({products}) => {
   
 </Box> 
 
+ */}
 
-
-{/*       <Carousel>
+  <Carousel autoPlay='false'>
       
         {featured.map((item)=>(
           <Card key={item.id} sx={{display:'flex'}}>
             < CardContent sx={{flex:1}}>
-              <Typography>{item.name}</Typography>
+
+              <CardMedia image={item.image.url} 
+            title={item.title} 
+            style={{height:0, paddingTop:'50%'}}/>
             </CardContent> 
            
-            <CardMedia
-            
-            image={item.image.url} 
-            title={item.title} 
-            style={{height:0, paddingTop:'25%'}}/>
+    
           
           </Card>
         ))}
-          </Carousel> */}
+          </Carousel> 
     
        
          
