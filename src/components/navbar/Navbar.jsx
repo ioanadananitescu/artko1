@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, forwardRef } from 'react';
 import {AppBar, IconButton, Toolbar, Badge, Typography, Container} from '@material-ui/core';
 import { ShoppingCart } from '@material-ui/icons';
 import {Link, useLocation} from 'react-router-dom';
@@ -18,7 +18,7 @@ import useStyles from './styles.js';
 
 
 
-const Navbar = ({totalItems}) => {
+const Navbar = forwardRef(({totalItems}, ref) => {
 
   const classes=useStyles();
   //take the value of the current location to not display the cart icon when on the cart location
@@ -81,21 +81,20 @@ console.log(pages);
 </FormGroup>
 </Box>
   <Toolbar>
-    <div style={{margin:'auto'}}>
-
+    <Box m="auto">
     <Typography component={Link} to="/" variant="h6" className={classes.title} color="inherit"
      sx={{display: { xs: 'none', md: 'flex' }}}>
       <img src="./logo192.png" alt="Art Agency" height="25px" className={classes.image}/>
       ARTKO. Art Agency
     </Typography>
-    </div>
+    </Box>
+
+
     <div className={classes.grow}/>
-   
    {location.pathname !='/cart' &&(
    <div className={classes.button}>
      <IconButton component={Link} to='/cart' aria-label="Show items in the cart" color="inherit">
        <EmptyCart totalItems={totalItems} />
- 
      </IconButton>
    </div>)}
 
@@ -147,9 +146,11 @@ console.log(pages);
      
         <Menu 
         anchorEl={menuItems} 
+        keepMounted
         anchorOrigin={{vertical:'bottom', horizontal:'left'}}
         open={Boolean(menuItems)} 
         onClose={closeMenuTooltip}
+          onClick={closeMenuTooltip}
         sx={{display:{xs:'block', md:'none'}}}
         transformOrigin={{vertical:'top', horizontal:'left'}}>
          
@@ -180,7 +181,7 @@ console.log(pages);
 
 </>
   )
-}
+})
 
 export default Navbar
 

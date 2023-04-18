@@ -1,6 +1,6 @@
 import React, {lazy, Suspense, useState, useEffect} from 'react';
 
-import {Navbar,  Cart, Checkout, Article, Featured, Home, Product, Products} from './components';
+import {Navbar,  Cart, Checkout, Article, Featured, Home, Products, Paintings, Filter} from './components';
 import './App.css';
 import {commerce} from '../src/lib/commerce';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -95,8 +95,10 @@ console.log(products);
              </Route>
              <Route exact path="/checkout" element={<Checkout/>}></Route>
             
-             <Route path="/article/:id" element={<Article/>}></Route> 
-           
+             <Route path="/article/:id" element={<Article onAddToCart={handleAddToCart}/>}></Route> 
+
+             <Route exact path="/paintings" element={<Paintings products={products} onAddToCart={handleAddToCart}/>}></Route>
+           <Route exact path="/filter" element={<Filter onAddToCart={handleAddToCart}/>}></Route>
           </Routes> 
    
           

@@ -11,25 +11,38 @@ import { ImageList, ImageListItem, ImageListItemBar, Box } from '@mui/material';
 
 
 
-const Featured = ({products}) => {
+const Featured =({products})=> {
   const classes=useStyles();
 
 
-  const featured= products.filter((item) => item.price.formatted_with_symbol ==='lei2,000.00');
+  const featured= products
+  .map(item => ( {
+    ...item,
+    categories: item.categories
+    .filter (item2=>item2.slug==='firstpage')
+  }))
+  .filter(item=>item.categories.length >0);
 
 
 
-const [loading, setLoading]=useState(true);
+
+const [loading, setLoading]=useState(true); 
 
   useEffect(()=>{
+
+
     const timer = setTimeout(()=>{
       setLoading(false)
     }, 2000);
-    return ()=> clearTimeout(timer);
+    return ()=> clearTimeout(timer); 
 
   },[]); 
 
+
+
 console.log(featured);
+
+
   return (
     <>
     <main className={classes.content}>
@@ -71,8 +84,8 @@ console.log(featured);
 </Box> 
 
  */}
-
-  <Carousel autoPlay='false'>
+<div style={{position:'absolute', width:'100%'}} >
+  <Carousel autoPlay={false} navButtonsAlwaysVisible={true}>
       
         {featured.map((item)=>(
           <Card key={item.id} sx={{display:'flex'}}>
@@ -88,7 +101,7 @@ console.log(featured);
           </Card>
         ))}
           </Carousel> 
-    
+    </div>
        
          
    
@@ -97,5 +110,6 @@ console.log(featured);
   )
 
 }
+
 
 export default Featured

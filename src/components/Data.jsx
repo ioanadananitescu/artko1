@@ -1,26 +1,139 @@
-export const pages=[
+
+
+export const pages = [
     {
-        name:"Home",
+        id:1,
+        name: "Home",
         path:"/home"
+    }, 
+
+      {
+        id:3,
+        name: "Drawings",
+        path: "#"
     },
     {
-        name:"Paintings",
+        id:4,
+        name: "Watercolor",
+        path: "#"
+    },
+    {
+        id:5,
+        name: "Featured",
+        path: "/featured"
+    }, 
+    {
+        id: 6, 
+        name: "Paintings", 
         path:"/paintings"
     },
     {
-        name:"Drawings",
-        path:"/drawings"
-    },
-    {
-        name:"Sculptures",
-        path:"/sculptures"
-    },
-    {
-        name:"Digital Art",
-        path:"/digital"
-    },
-    {
-        name:"Featured",
-        path:"/featured"
+        id:7,
+        name:"Filter",
+        path:"/filter"
     }
-]
+ 
+];
+
+export const select =[
+    {
+        id:1,
+        name: "Size",
+        child: [
+            {
+                id:1,
+                name: "small"                
+            },
+            {
+                id:1,
+                name: "medium"                
+            },
+            {
+                id:1,
+                name: "big"                
+            }
+        ]
+    }, 
+    {
+        id:2,
+        name: "Color",
+        child: [
+            {
+                id:1,
+                name: "fuchsia"                
+            },
+            {
+                id:2,
+                name: "blue"                
+            },
+            {
+                id:3,
+                name: "yellow"                
+            },
+            {
+                id:4,
+                name: "gray"                
+            }
+        ]
+    },
+    {
+        id:3,
+        name: "Price",
+        child: [
+            {
+                id:1,
+                name: "<500"                
+            },
+            {
+                id:1,
+                name: "501-1000"                
+            },
+            {
+                id:1,
+                name: ">1000"                
+            },
+        ]
+    }
+];
+    
+
+    export const size = [
+        {
+            id:1,
+            name:"big"
+        },
+        {
+            id:2,
+            name:"medium"
+        },
+        {
+            id:3,
+            name:"small"
+        }
+    ];
+    export const color=[
+        {
+            id:1,
+            name:"Red"
+        },
+        {
+            id:2,
+            name:"Fuchsia"
+        },
+        {
+            id:3,
+            name:"Blue"
+        },
+        {
+            id:4,
+            name:"Black"
+        },
+        {
+            id:5,
+            name:"white"
+        }
+    ]
+    
+    
+
+    

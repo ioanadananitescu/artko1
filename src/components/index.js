@@ -9,4 +9,6 @@ export {default as Checkout} from './CheckoutForm/Checkout/Checkout';
 export {default as Featured} from './Featured/Featured';
 export {default as Home} from './Home/Home';
 export {default as Loading} from './Loading/Loading';
+export {default as Paintings} from './Paintings/Paintings';
+export {default as Filter} from './Filter/Filter';
 

@@ -7,12 +7,6 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing(3),
   },
-
-  media:{
-    height: 0,
-    paddingTop: '56.25%', //16:9
- 
-  },
   root: {
     flexGrow: 1,
   },

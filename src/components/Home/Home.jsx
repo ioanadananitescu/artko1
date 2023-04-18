@@ -26,7 +26,7 @@ height of the toolbar so the products are pushed a little bit down */}
 
 <div style={{margin:'auto'}}>
   <div style={{position:'relative'}}>
-<Featured products={products}/> 
+<Featured products={products} /> 
 </div>
 <div style={{position:'absolute', top:600}}>
 

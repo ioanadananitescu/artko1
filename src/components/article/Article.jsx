@@ -4,7 +4,7 @@ import { commerce } from '../../lib/commerce.js';
 import {useParams} from 'react-router-dom';
 import { AddShoppingCart} from '@material-ui/icons';
 import { Products, Product} from '../../components';
-import {Paper, Stepper, Step, StepLabel, Typography, CircularProgress, Divider, Button, CardMedia, CardContent} from '@material-ui/core';
+import { Grid, Typography, Card, CardMedia, CardContent} from '@material-ui/core';
 import useStyles from './style';
 
 
@@ -18,8 +18,8 @@ const Article = () => {
 const [article, setArticle]=useState({});
 const fetchArticle= async(id) =>{
   const response=await commerce.products.retrieve(id);
-  const{name, description, image, categories}=response;
-  setArticle({id, name, description, src:image.url, categories})
+  const{name, description, image, categories, attributes}=response;
+  setArticle({id, name, description, src:image.url, categories, attributes})
 }
 
 useEffect(()=>{
@@ -29,16 +29,35 @@ useEffect(()=>{
 
 console.log(article.name);
 console.log(article.categories);
+console.log(article.attributes);
 
   return (
     <>
-   <div className={classes.toolbar}/>
+  
    <main className={classes.content}>
-   <h3>Nota: String: {article.name}</h3>
+   <div className={classes.toolbar}/>
+   <div className={classes.toolbar}/>
+   
+
+
+<Grid container spacing={4}>
+  <Grid item xs={12} sm={6} lg={8}>
+  <Card>
+      <CardContent>
+      <CardMedia className={classes.media} title={article.name} image={article.src}></CardMedia>
+        <Typography>{article.name}</Typography>
+       
+      </CardContent>
+    </Card>
+
+  </Grid>
+</Grid>
+  
+{/*    <h3>Nota: String: {article.name}</h3>
    
   <img src={article.src}>
 
-   </img>
+   </img> */}
    
       
    </main>
