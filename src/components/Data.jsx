@@ -42,15 +42,15 @@ export const select =[
         child: [
             {
                 id:1,
-                name: "small"                
+                name: "Small"                
             },
             {
                 id:1,
-                name: "medium"                
+                name: "Medium"                
             },
             {
                 id:1,
-                name: "big"                
+                name: "Big"                
             }
         ]
     }, 
@@ -60,19 +60,28 @@ export const select =[
         child: [
             {
                 id:1,
-                name: "fuchsia"                
+                name: "Fuchsia"                
             },
             {
                 id:2,
-                name: "blue"                
+                name: "Blue"                
             },
             {
                 id:3,
-                name: "yellow"                
+                name: "Yellow"                
             },
             {
                 id:4,
-                name: "gray"                
+                name: "White"                
+            },
+            {
+                id:5,
+                name:"Black"
+            },
+            {
+                id:6,
+                name:"Red"
+
             }
         ]
     },
@@ -100,15 +109,15 @@ export const select =[
     export const size = [
         {
             id:1,
-            name:"big"
+            name:"Big"
         },
         {
             id:2,
-            name:"medium"
+            name:"Medium"
         },
         {
             id:3,
-            name:"small"
+            name:"Small"
         }
     ];
     export const color=[
@@ -130,7 +139,26 @@ export const select =[
         },
         {
             id:5,
-            name:"white"
+            name:"White"
+        }
+    ];
+
+    export const medium=[
+        {
+            id:1,
+            name:"Featured"
+        },
+        {
+            id:2,
+            name:"Paintings"
+        },
+        {
+            id:3,
+            name:"Watercolor"
+        }, 
+        {
+            id:4,
+            name:"Engravings"
         }
     ]
     
