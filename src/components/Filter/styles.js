@@ -4,12 +4,12 @@ import {makeStyles} from '@material-ui/core/styles'
 
 export default makeStyles((theme) => ({
   toolbar: {
-    minHeight: 126,
+    minHeight: 170,
     [`${theme.breakpoints.up('xs')} and (orientation: landscape)`]: {
-      minHeight: 120,
+      minHeight: 170,
     },
     [theme.breakpoints.up('sm')]: {
-      minHeight: 120,
+      minHeight: 170,
     },
   },
 

@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useMemo} from 'react';
 import { commerce } from '../../lib/commerce';
 import Product from '../Products/Product/Product';
-import {Grid, Box, Chip, Typography, Link, FormControl, Select, InputLabel, MenuItem, FormHelperText, ListSubheader} from '@mui/material';
+import {Grid, Paper, Box, Chip, Typography, Link, FormControl, Select, InputLabel, MenuItem, FormHelperText, ListSubheader} from '@mui/material';
 import {size, color, medium} from '../Data';
 import CancelIcon from '@mui/icons-material/Cancel';
 import useStyles from './styles';
@@ -32,8 +32,9 @@ const MenuProps = {
  /*    const [categ, setCateg]=useState([]);
     const [selectedCateg, setSelectedCateg]=useState(); */
     const [selectedItem, setSelectedItem]=useState([]);
+    const [selectedColor, setSelectedColor]=useState([]);
    
-   const [anchorEl, setAnchorEl]= useState(false);
+   
 
     const fetchProducts= async ()=>{
         const {data} = await commerce.products.list();
@@ -55,6 +56,10 @@ const MenuProps = {
   function handleChange(event){
       setSelectedItem(event.target.value);
     } 
+
+    function handleColorChange(event){
+      setSelectedColor(event.target.value);
+    }
  
 /*   const handleChange = (event) => {
       const {
@@ -73,10 +78,7 @@ const MenuProps = {
 
     } */
    
-    
-    const handleClose=()=>{
-      setAnchorEl(false);
-    }
+   
 
 /* function handleCategChange(event){
     setSelectedCateg(event.target.value);
@@ -84,7 +86,10 @@ const MenuProps = {
 
 
 
-/* const filter= products
+/* For a single value selected Select dropdown, the result will be a string
+
+
+const filter= products
 .map(item => ( {
   ...item, categories: item.categories.filter (item2=>item2.name===selectedCateg)
 }))
@@ -99,34 +104,45 @@ const filter= products
 }))
 .filter(item=>item.categories.length >0);
 
+const filterColor=products
+.map(itemColor => ( {
+  ...itemColor, categories:itemColor.categories.filter(itemColor2=>selectedColor.includes(itemColor2.name))
+}))
+.filter(item2=>item2.categories.length>0);
 
+const both=products
+.map(item=>({
+  ...item, categories:item.categories.filter(item2=>(selectedItem&&selectedColor).includes(item2.name))
+}))
 
 
 const filtered=
-(selectedItem.length===0)?products:filter;
+((selectedItem.length===0)&&(selectedColor.length===0))?products:both
+
+
 
 
 console.log(products);
 console.log(filtered);
 
+
   return (
     <>
     <main>
       <div className={classes.toolbar}/>
-      <div className={classes.toolbar}/>
+      
     
-     
-      <Grid container justifyContent="left" direction="row" spacing={1}>
- <Grid item xs="auto" >
+     <Grid container columns={16} direction="row">
+    
+      <Grid item md={4}>
+        <Grid container direction="column">
+    
+ <Grid item xs={4} md={6}>
  
-       <FormControl sx={{m:1, minWidth:500}}>
-  <InputLabel id="item-filter">Filter works</InputLabel>
+       <FormControl variant="standard" sx={{m:1, minWidth:120}}>
+  <InputLabel id="item-filter">Size</InputLabel>
   <Select autoWidth 
-  
-  anchorEl={anchorEl}
- 
- onClick={handleClose}
-  multiple
+multiple
     labelId="item-filter"
     id="selectItems"
     value={selectedItem}
@@ -151,26 +167,55 @@ console.log(filtered);
     
   
   >
-    <ListSubheader>Select by color</ListSubheader>
-     {color.map((item)=>(
-    <MenuItem 
-
-    
-  
-    key={item.id} value={item.name}>{item.name}</MenuItem>
-      ))}
+   
       <ListSubheader>Select by size</ListSubheader>
       {size.map((item)=>(
     <MenuItem key={item.id} value={item.name}>{item.name}</MenuItem>
       ))}
-      <ListSubheader><Typography variant="body2">Select by medium</Typography></ListSubheader>
-      {medium.map((item)=>(
-    <MenuItem key={item.id} value={item.name}>{item.name}</MenuItem>
-      ))}
+      
   </Select>
-  <FormHelperText>Flter works by size, color, medium or price.</FormHelperText>
+  <FormHelperText>Flter works by size</FormHelperText>
 </FormControl>  
 
+</Grid>
+<Grid item xs={4} md={6}>
+ 
+       <FormControl variant="standard" sx={{m:1, minWidth:120}}>
+  <InputLabel id="color-filter">Color</InputLabel>
+  <Select autoWidth 
+multiple
+    labelId="color-filter"
+    id="selectColor"
+    value={selectedColor}
+    label="Color"
+    onChange={handleColorChange}
+    
+          renderValue={(selected) => (
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+              {selected.map((value) => (
+                <Chip key={value} label={value} onDelete={
+                  ()=> setSelectedColor(
+                  selectedColor.filter((item)=>item!=value))} 
+                  deleteIcon={
+                    <CancelIcon onMouseDown={(event)=>event.stopPropagation()}/>
+                  }
+                  />
+              ))}
+            </Box>
+          )}
+          MenuProps={MenuProps}
+  >
+    <ListSubheader>Select by color</ListSubheader>
+     {color.map((item)=>(
+    <MenuItem 
+    key={item.id} value={item.name}>{item.name}</MenuItem>
+      ))}   
+  </Select>
+  <FormHelperText>Flter works by color</FormHelperText>
+</FormControl>  
+
+</Grid>
+</Grid>
 </Grid>
 {/* <Grid item xs="auto" >
        <FormControl sx={{m:1, minWidth:200}}>
@@ -189,21 +234,19 @@ console.log(filtered);
   <FormHelperText>With label + helper text</FormHelperText>
 </FormControl>  
 </Grid> */}
- 
-<Grid container item spacing={2}>
+ <Grid item xs={12}>
+<Grid container xs={12} spacing={2}>
         {filtered.map((product) => (
-          <Grid item key={product.id} xs={10} sm={4} md={3} lg={2}>
+          <Grid item key={product.id} xs={8} sm={8} md={5} lg={4}>
             <Link to={`/article/${product.id}`}>
               <Product product={product} onAddToCart={onAddToCart} />
             </Link>
-
-
-
           </Grid>
         ))}
       </Grid>
       
       
+</Grid>
 </Grid>
   
   </main>
