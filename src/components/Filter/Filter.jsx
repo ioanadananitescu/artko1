@@ -33,6 +33,7 @@ const MenuProps = {
     const [selectedCateg, setSelectedCateg]=useState(); */
     const [selectedItem, setSelectedItem]=useState([]);
     const [selectedColor, setSelectedColor]=useState([]);
+    const [selectedList, setSelectedList]=useState([]);
    
    
 
@@ -55,10 +56,12 @@ const MenuProps = {
 
   function handleChange(event){
       setSelectedItem(event.target.value);
+      setSelectedList([...selectedItem, ...selectedColor]);
     } 
 
     function handleColorChange(event){
       setSelectedColor(event.target.value);
+      setSelectedList([...selectedItem, ...selectedColor]);
     }
  
 /*   const handleChange = (event) => {
@@ -110,14 +113,16 @@ const filterColor=products
 }))
 .filter(item2=>item2.categories.length>0);
 
-const both=products
-.map(item=>({
-  ...item, categories:item.categories.filter(item2=>(selectedItem&&selectedColor).includes(item2.name))
+const filterList=products
+.map(itemColor => ( {
+  ...itemColor, categories:itemColor.categories.filter(itemColor2=>selectedList.includes(itemColor2.name))
 }))
+.filter(item2=>item2.categories.length>0);
 
 
 const filtered=
-((selectedItem.length===0)&&(selectedColor.length===0))?products:both
+(selectedList.length===0)?products:filterList;
+
 
 
 
