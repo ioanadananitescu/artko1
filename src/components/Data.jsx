@@ -31,6 +31,11 @@ export const pages = [
         id:7,
         name:"Filter",
         path:"/filter"
+    },
+    {
+        id:8,
+        name:"Mobile Filter",
+        path:"/mobilefilter"
     }
  
 ];

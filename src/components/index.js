@@ -11,4 +11,5 @@ export {default as Home} from './Home/Home';
 export {default as Loading} from './Loading/Loading';
 export {default as Paintings} from './Paintings/Paintings';
 export {default as Filter} from './Filter/Filter';
+export {default as MobileFilter} from './Filter/MobileFilter';
 

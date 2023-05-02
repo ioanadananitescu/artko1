@@ -1,15 +1,19 @@
 import React, {useState, useEffect, useMemo} from 'react';
+import {useMediaQuery, useTheme} from '@mui/material'
 import { commerce } from '../../lib/commerce';
 import Product from '../Products/Product/Product';
-import {Grid, Paper, Box, Chip, Typography, Link, FormControl, Select, InputLabel, MenuItem, FormHelperText, ListSubheader} from '@mui/material';
+import {Grid, Toolbar, IconButton, Drawer, Divider, List, Box, Chip, Typography, Link, FormGroup, Checkbox, FormControl, FormControlLabel, Select, InputLabel, MenuItem, FormHelperText, ListSubheader} from '@mui/material';
 import {size, color, medium} from '../Data';
 import CancelIcon from '@mui/icons-material/Cancel';
+import TuneIcon from '@mui/icons-material/Tune';
 import useStyles from './styles';
-import { ClickAwayListener } from '@material-ui/core';
+
+
 
 
 const Filter = ({onAddToCart}) => {
-  
+  const theme=useTheme();
+  const isMobile=useMediaQuery(theme.breakpoints.down("xs"));
   //styles
   const classes=useStyles();
 //for CHIP tags
@@ -29,25 +33,15 @@ const MenuProps = {
     
     
     const [products, setProducts]=useState([]);
- /*    const [categ, setCateg]=useState([]);
-    const [selectedCateg, setSelectedCateg]=useState(); */
     const [selectedItem, setSelectedItem]=useState([]);
     const [selectedColor, setSelectedColor]=useState([]);
-    const [selectedList, setSelectedList]=useState([]);
-   
-   
+  
 
     const fetchProducts= async ()=>{
         const {data} = await commerce.products.list();
         setProducts(data);
     }
-/*     const fetchCategories=async ()=>{
-        const {data}=await commerce.categories.list();
-        
-        setCateg(data);
-    } */
 
-    
 
     useEffect(()=>{
         fetchProducts();
@@ -56,12 +50,12 @@ const MenuProps = {
 
   function handleChange(event){
       setSelectedItem(event.target.value);
-      setSelectedList([...selectedItem, ...selectedColor]);
+    
     } 
 
     function handleColorChange(event){
       setSelectedColor(event.target.value);
-      setSelectedList([...selectedItem, ...selectedColor]);
+    
     }
  
 /*   const handleChange = (event) => {
@@ -81,12 +75,6 @@ const MenuProps = {
 
     } */
    
-   
-
-/* function handleCategChange(event){
-    setSelectedCateg(event.target.value);
-} */
-
 
 
 /* For a single value selected Select dropdown, the result will be a string
@@ -101,46 +89,34 @@ const filter= products
 const filtered=
 (!selectedCateg)?products:filter; */
 
+const filterSize=products.filter(item=>item.categories.some(x=>selectedItem.includes(x.name)));
+const filterOnlyColor=products.filter(item=>item.categories.some(y=>selectedColor.includes(y.name)));
+const filterColor=filterSize.filter(item=>item.categories.some(z=>selectedColor.includes(z.name)));
+
+const filtered=
+(selectedItem.length===0)&&(selectedColor.length===0)?products:
+(selectedColor.length===0)?filterSize:
+(selectedItem.length===0)?filterOnlyColor:filterColor;
+
+/* 
 const filter= products
 .map(item => ( {
   ...item, categories: item.categories.filter (item2=>selectedItem.includes(item2.name))
 }))
 .filter(item=>item.categories.length >0);
 
-const filterColor=products
-.map(itemColor => ( {
-  ...itemColor, categories:itemColor.categories.filter(itemColor2=>selectedColor.includes(itemColor2.name))
-}))
-.filter(item2=>item2.categories.length>0);
+ */
 
-const filterList=products
-.map(itemColor => ( {
-  ...itemColor, categories:itemColor.categories.filter(itemColor2=>selectedList.includes(itemColor2.name))
-}))
-.filter(item2=>item2.categories.length>0);
-
-
-const filtered=
-(selectedList.length===0)?products:filterList;
-
-
-
-
-
-console.log(products);
-console.log(filtered);
-
+//the Drawer for the mobile version
 
   return (
     <>
     <main>
       <div className={classes.toolbar}/>
-      
-    
-     <Grid container columns={16} direction="row">
+      <Grid container columns={16} direction="row">
     
       <Grid item md={4}>
-        <Grid container direction="column">
+        <Grid container direction="row">
     
  <Grid item xs={4} md={6}>
  
@@ -167,10 +143,7 @@ multiple
               ))}
             </Box>
           )}
-          MenuProps={MenuProps}
-        
-    
-  
+          MenuProps={MenuProps} 
   >
    
       <ListSubheader>Select by size</ListSubheader>
@@ -222,27 +195,10 @@ multiple
 </Grid>
 </Grid>
 </Grid>
-{/* <Grid item xs="auto" >
-       <FormControl sx={{m:1, minWidth:200}}>
-  <InputLabel id="price-select">Filter by price</InputLabel>
-  <Select autoWidth
-    labelId="price-select"
-    id="priceSelect"
-    value={selectedCateg}
-    label="Price"
-    onChange={handleCategChange}
-  >
-     {categ.map((item)=>(
-    <MenuItem key={item.id} value={item.name}>{item.name}</MenuItem>
-      ))}
-  </Select>
-  <FormHelperText>With label + helper text</FormHelperText>
-</FormControl>  
-</Grid> */}
- <Grid item xs={12}>
-<Grid container xs={12} spacing={2}>
+ <Grid item xs={16} md={12}>
+<Grid container xs={16} md={12} spacing={2}>
         {filtered.map((product) => (
-          <Grid item key={product.id} xs={8} sm={8} md={5} lg={4}>
+          <Grid item key={product.id} xs={12} sm={10} md={7} lg={6}>
             <Link to={`/article/${product.id}`}>
               <Product product={product} onAddToCart={onAddToCart} />
             </Link>
@@ -253,7 +209,7 @@ multiple
       
 </Grid>
 </Grid>
-  
+
   </main>
   </>
   )
