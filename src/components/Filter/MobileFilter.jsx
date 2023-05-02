@@ -1,6 +1,6 @@
 
 import React, {useState, useEffect, useMemo} from 'react';
-import {useMediaQuery, useTheme} from '@mui/material'
+import { useMediaQuery, useTheme} from '@mui/material'
 import { commerce } from '../../lib/commerce';
 import Product from '../Products/Product/Product';
 import {Grid, Paper, Toolbar, IconButton, Drawer, Divider, List, Box, Chip, Typography, Link, FormGroup, Checkbox, FormControl, FormControlLabel, Select, InputLabel, MenuItem, FormHelperText, ListSubheader} from '@mui/material';
@@ -9,9 +9,11 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import TuneIcon from '@mui/icons-material/Tune';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from'@mui/material/ListItemText';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import Collapse from '@mui/material/Collapse';
-import { ExpandLess } from '@mui/icons-material/ExpandLess';
+import  ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import Button from '@mui/material/Button';
 import useStyles from './styles';
 
 const MobileFilter = ({products, onAddToCart}) => {
@@ -19,7 +21,9 @@ const MobileFilter = ({products, onAddToCart}) => {
 
     const [open, setOpen]=useState(false);
 
-    const [openCollapse, setOpenCollapse]=useState(true);
+    const [openCollapseSize, setOpenCollapseSize]=useState(false);
+    const [openCollapseColor, setOpenCollapseColor]=useState(false);
+
     const[filterTags, setFilterTags]=useState([]);
     const drawerWidth = 240;
     const drawerSpace = 25;
@@ -45,8 +49,13 @@ const MobileFilter = ({products, onAddToCart}) => {
     }
     }
 
-   const handleClick=()=>{
-    setOpenCollapse(!openCollapse);
+   const handleClickSize=()=>{
+    setOpenCollapseSize(!openCollapseSize);
+
+   }
+
+   const handleClickColor=()=>{
+    setOpenCollapseColor(!openCollapseColor);
    }
   
     return(
@@ -57,58 +66,58 @@ const MobileFilter = ({products, onAddToCart}) => {
  
      
     <Grid item xs={16} md={16}>
-        <Box sx={{display:'flex', width:'100%'}}>
-    <Paper elevation={4} sx={{borderRadius:2, width:'100%'}}>
+       
+    <Paper elevation={4} sx={{borderRadius:2}}>
         <Box p={2}>
-        <IconButton color="inherit"
+        <IconButton color="primary"
                 aria-label="open drawer"
                 edge="start"
                 onClick={() => setOpen(!open)}
-                sx={{ ml: 10}}>
+                sx={{ ml: 10, }}>
                 <TuneIcon />
             </IconButton>
         </Box>
     </Paper>
-        <Box component="nav" sx={{ width:{drawerWidth}, flexShrink: { sm: 0 } }} aria-label="filter">
+   
+    
+        <Box component="nav" sx={{width:'100%', minWidth:'320px'}}>
                 <Drawer variant="temporary"
                     open={open}
                     onClose={() => setOpen(false)}
+                  
                     onOpen={() => setOpen(true)}
-                    ModalProps={{ keepMounted: true, }}
-                    sx={{
-                        display: { xs: 'block', sm: 'block' },
-                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth }
+                    ModalProps={{ keepMounted: true }}
+                    sx={{display:{xs:'block', sm:'inline-block'},
+                       
+                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width:'100%', minWidth:'320px'}
                     }}>
               {/* Drawer element */}
                 <div>
       <Toolbar sx={{mt:`calc(${drawerSpace}/2)`}}>Select paintings: </Toolbar>
       <Divider />
-     <List sx={{ml:5, bgcolor:'background.paper'}}
-     >
-        <ListItemButton onClick={handleClick}>
-        <ListItemText primary="Filter by size"/>
-        {openCollapse?<ExpandLess/>:<ExpandMore/>}
-        <Collapse in={openCollapse} timeout="auto" unmountOnExit>
-                       {size.map((item) => (
-                    
-                                     <FormGroup key={item.id}>
-                                         <FormControlLabel control={<Checkbox value={item.name} onChange={filterHandle}/>} label={item.name}>
-    
-                                         </FormControlLabel>
-                                     </FormGroup> 
-                             ))}
-     
-                            
-                             </Collapse>
-                             </ListItemButton>
-                             <Divider/>
-                             </List>
-                             <List sx={{ml:5, bgcolor:'background.paper'}}
-     >
-        <ListItemButton onClick={handleClick}>
-        <ListItemText primary="Filter by size"/>
-        {openCollapse?<ExpandLess/>:<ExpandMore/>}
-        <Collapse in={openCollapse} timeout="auto" unmountOnExit>
+ 
+  <ListItemButton onClick={handleClickSize} sx={{ bgcolor:'#f9f9f9'}}>
+   <ListItemText primary="Filter by size"/>
+        {openCollapseSize?<ExpandLess/>:<ExpandMore/>}
+</ListItemButton>
+<Collapse in={openCollapseSize} timeout="auto" unmountOnExit>
+    <List component="div" disablePadding>
+{size.map((item) => (
+   <FormGroup key={item.id}>
+ <FormControlLabel control={<Checkbox value={item.name} onChange={filterHandle}/>} label={item.name}>
+  </FormControlLabel>
+ </FormGroup> 
+ 
+        ))}
+        </List>
+ </Collapse>
+ 
+<Divider/>
+ <ListItemButton onClick={handleClickColor}sx={{ bgcolor:'#f9f9f9'}} >
+ <ListItemText primary="Filter by color"/>
+        {openCollapseColor?<ExpandLess/>:<ExpandMore/>}
+        </ListItemButton>
+        <Collapse in={openCollapseColor} timeout="auto" unmountOnExit>
                            
                                {color.map((item) => (
                                
@@ -120,16 +129,17 @@ const MobileFilter = ({products, onAddToCart}) => {
                              ))}              
                      
                      </Collapse>
-                     </ListItemButton>
-                     </List>
+                   
+                <Divider/>
+                     <Button variant="contained" color="primary" sx={{width:'100%'}}><Typography variant="body2" onClick={()=>{setOpen(false)}}>Apply filters</Typography></Button>
                      
                   
                      </div>    
                 </Drawer>
             </Box>
-            </Box>
-
+            
             </Grid>
+            
             <Grid item xs={16} md={12}>
 <Grid container xs={16} md={12} spacing={2}>
         {filtered.map((product) => (
